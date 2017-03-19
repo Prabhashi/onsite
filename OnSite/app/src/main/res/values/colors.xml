@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#F50057</color>
+    <color name="colorPrimaryDark">#F50057</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="viewBg">#f1f5f8</color>
+    <color name="album_title">#4c4c4c</color>
+    <color name="green" > #00ff00</color>
+    <color name="red">#ff0000</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#dddddd</color>
+    <color name="card_background">#cccccc</color>
+
+
+    <color name="colorAccent1">#00ABAA</color>
+    <color name="translucent_black">#80000000</color>
+    <color name="appColor">#000000</color>
+    <!-- color name="appColor">#005ab0</color -->
+    <!-- color name="appColor">##ed1c24</color -->
+    <color name="textColorItemName">#00b259</color >
+    <color name="textColorButton">#FFFFFF</color >
+    <color name="textColorHeadlines">#000000</color >
+    <color name="buttonBackground">#00b259</color >
+    <!-- color name="buttonColor">#14181e</color -->
+</resources>

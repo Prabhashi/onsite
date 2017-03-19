@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/thin_border">
+<LinearLayout
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="35dp">
+    <ImageView
+        android:id="@+id/im_issue_home_commenter_photo"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/album2"
+        android:layout_weight="1"/>
+    <TextView
+        android:id="@+id/txt_issue_home_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="8"
+        android:paddingLeft="5dp"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:gravity="center_vertical|left"
+        android:text="Commenter Name"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="2nd Feb 2017"
+        android:gravity="center_vertical"/>
+</LinearLayout>
+    <TextView
+        android:padding="8dp"
+        android:id="@+id/txt_issue_home_comment_body"
+        android:text="As the site manager I have contacted relevent people about this. Contractor has already been informed about the issue and will sooon be taken care of."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

@@ -1,0 +1,31 @@
+<div class="animated fadeIn">
+    <div><h2>Floor Plans</h2></div>
+	
+	<div class="col-md-6">
+	<div class="card">
+
+
+                <div class="card-header">
+                    <strong>Floor Plans</strong>
+
+                </div>
+                <div class="card-block">
+                    <button type="button" ng-click="Plan1()" class="btn btn-info btn-lg btn-block">Plan 1</button>
+                    <button type="button" ng-click="Plan2()" class="btn btn-info btn-lg btn-block">Plan 2</button>
+                    <button type="button" ng-click="Plan3()" class="btn btn-info btn-lg btn-block">Plan 3</button>
+                    <button type="button" ng-click="Plan4()" class="btn btn-info btn-lg btn-block">Plan 4</button>
+                    <button type="button" ng-click="Plan5()" class="btn btn-info btn-lg btn-block">Plan 5</button>
+                    <button type="button" ng-click="Plan6()" class="btn btn-info btn-lg btn-block">Plan 6</button>
+                    <button type="button" ng-click="Plan7()" class="btn btn-info btn-lg btn-block">Plan 7</button>
+                </div>
+			</div></div>
+	        <div><h1>Upload New Plan</h1>
+
+			<label>Plan Name : <input type="text" ng-model="plan.name"><label>
+			<label>File : <input type="file" ng-model="plan.file"><label>
+
+			</div>
+
+			<div><button type="button" class="btn btn-success active" ng-click="plan.submit" >Submit</button></div>
+
+</div>

@@ -1,0 +1,95 @@
+<div class="animated fadeIn">
+    			 <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            Issue Report 
+                        </h1>
+                    </div>
+                </div> 
+                
+			<div>
+			<form action="POST" name="frm">
+			
+				<label > Project Name :</label>
+				<input type="text" ng-model="user.pName" required /> <br /><br />
+				<label > Type :</label>
+				<select name="type" required >
+						<option> An Issue</option>
+						<option>A Modification</option>
+						<option>A Variation </option>
+					</select><br /><br />
+				<label > Severity :</label>
+				<select name="severity"   >
+						<option> need quick attention</option>
+						<option> medium severity </option>
+						<option> less severity </option>
+					</select><br /><br />
+				<label > Assignee :</label>
+				<input type="text"  ng-model="assignee" /><br />					<!--person must in the mentioned project-->
+				<label > Description :</label><br />
+				<textarea name="textarea"   id="textarea" rows="10" cols="70" ng-model="user.desciption" required > </textarea><br /><br />
+				
+				
+				<label > Upload Image :</label>
+				<div class="imageUpload">
+						<div id="dragndropimage" class="uploadimage-dragndrop" >
+						<div class="uploadimage-text" >
+							
+							<img src="#" id="image" alt="Your image" >
+						</div>
+						</div>
+						<input type="file" onchange="readURL(this);"  >
+		
+						<div id="upload-liveuploads"  data-bind="template: { name: 'template-uploads' }"></div>
+						<br /><br />
+					</div>
+				<div id="submit" > <input type="submit" value="Submit" /></div>
+						
+				</form>
+				</div> 
+			
+			
+	<!--script images-->	
+ <script type="text/html" id="template-uploads">
+            <div data-bind="visible: showTotalProgress()">
+                <div >
+                    <span data-bind="text: uploadSpeedFormatted()" > </span>
+                    <span data-bind="text: timeRemainingFormatted()" style="float: right;"></span>
+                </div>
+                <div class="uploadimage-totalprogress">
+                    <div class="uploadimage-totalprogressbar" style="width: 0%;" data-bind="style: { width: totalProgress() + '%' }"></div>
+                </div>
+            </div>
+			
+			 
+            <div data-bind="foreach: uploads">
+                <div class="uploadimage-upload" data-bind="css: { 'uploadimage-uploadcompleted': uploadCompleted() }">
+                    <div class="uploadimage-fileinfo">
+                        <strong data-bind="text: fileName"></strong>
+                        <span data-bind="text: fileSizeFormated"></span>
+                        <span class="uploadimage-progresspct" data-bind="visible: uploadProgress() < 100"><span data-bind="text: uploadSpeedFormatted()"></span></span>
+                    </div>
+                    <div class="uploadimage-progress">
+                        <div class="uploadimage-progressbar" style="width: 0%;" data-bind="style: { width: uploadProgress() + '%' }"></div>
+                    </div>
+                </div>
+            </div>
+        </script>
+	
+	<script>
+	function readURL(input) {
+				if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#image')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(200);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+				}
+			}
+	</script>
+</div>

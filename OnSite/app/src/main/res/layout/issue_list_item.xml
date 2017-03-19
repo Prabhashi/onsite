@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:elevation="5dp"
+        android:background="@drawable/thin_border">
+
+        <RelativeLayout
+            android:id="@+id/project_list_root"
+            android:layout_width="match_parent"
+            android:layout_height="197dp"
+            android:padding="3sp">
+
+            <ImageView
+                android:id="@+id/im_issue_image"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="issue image"
+                android:layout_above="@+id/txt_issues_name"
+                android:layout_alignParentTop="true" />
+
+
+            <TextView
+                android:id="@+id/txt_issues_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="2sp"
+                android:background="@color/red"
+                android:text="State: Unresolved"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/txt_issues_comments"
+                android:text="Comments : 2"
+                android:layout_width="match_parent"
+                android:padding="3sp"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/txt_issues_state"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/txt_issues_severity"
+                android:text="Severity : Urgent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3sp"
+                android:layout_above="@+id/txt_issues_comments"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/txt_issues_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Issue name"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_above="@+id/txt_issues_severity"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

@@ -1,0 +1,13 @@
+.gradle
+build
+.idea
+*.iml
+.settings
+.classpath
+.project
+/bin
+/IssuesImages
+/ProfilePictures
+/PlanImages
+/target/*.jar
+gradle.properties

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
+    android:padding="5dp">
+<android.support.v7.widget.CardView
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TableLayout
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_weight="2"
+                android:text="Task Name" />
+
+            <TextView
+                android:id="@+id/taskName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="16"
+                android:paddingBottom="2dip"
+                android:paddingTop="6dip"
+                android:text="Acceptance"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <View
+            android:layout_height="1px"
+            android:background="#000000" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dip"
+            android:text="This should be completed soon. "
+            android:textColor="@color/colorAccent" />
+
+        <View
+            android:layout_height="1px"
+            android:background="#000000" />
+
+        <TableRow>
+            <TextView
+                android:text="Start Date"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        <TextView
+            android:id="@+id/startDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10-04-2018"
+            android:layout_weight="15"
+            android:textColor="#5d5d5d"
+            android:textStyle="bold" />
+
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="End Date"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:id="@+id/endDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10-04-2018"
+                android:layout_weight="15"
+                android:textColor="#5d5d5d"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+        <View
+            android:layout_height="1px"
+            android:background="#000000" />
+
+        <TableRow>
+            <TextView
+                android:text="Estimated Cost"
+                android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/estimatedCost"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dip"
+            android:paddingTop="6dip"
+            android:text="123543486"
+            android:layout_weight="15"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        </TableRow>
+    </TableLayout>
+</android.support.v7.widget.CardView>
+</LinearLayout>

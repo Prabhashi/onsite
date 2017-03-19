@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">My App</string>
+    <string name="action_settings">Settings</string>
+    <string name="severity_prompt"> Choose severity </string>
+
+    <string-array name="severity_arrays">
+        <item>high severity</item>
+        <item>medium</item>
+        <item>Low severity</item>
+
+    </string-array>
+</resources>

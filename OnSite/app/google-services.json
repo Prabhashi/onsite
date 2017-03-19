@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "443050903640",
+    "firebase_url": "https://onsite-4b1a3.firebaseio.com",
+    "project_id": "onsite-4b1a3",
+    "storage_bucket": "onsite-4b1a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443050903640:android:382c43e284b7b7f6",
+        "android_client_info": {
+          "package_name": "com.example.tjr.onsite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "443050903640-8teoeol0nfb96cgd8kn8bq2hj3jkr2sl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDa50DmdqrWoOTjBvwtlwVGzQYrqL7LVOQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

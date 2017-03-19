@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_user_home"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.tjr.onsite.ui.common.UserHomeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        >
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:textSize="@dimen/larger_text"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:inputType="none"
+            android:id="@+id/edit_userhome_fullname"
+            android:text="John Doe"
+            android:layout_weight="10"
+            />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:layout_gravity="end"
+            android:src="@mipmap/ic_edit"
+            android:layout_weight="1"
+            android:foregroundGravity="center"
+            android:id="@+id/img_userhome_edit"
+
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:padding="5dp"
+        android:src="@drawable/noavatar92"
+        android:layout_margin="5dp"
+        android:layout_gravity="center"
+        android:id="@+id/img_userhome_profile"
+        android:background="@drawable/thin_border"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:id="@+id/txt_userhome_rate"
+        android:text="Rate this user"/>
+    <RatingBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:rating="3"
+        android:stepSize="1"
+        android:isIndicator="false"
+        android:id="@+id/rate_userhome_rate_bar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Phone "
+            android:gravity="center_vertical"
+            android:textSize="@dimen/large_text"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="---"
+            android:id="@+id/edit_userhome_phone"
+            android:inputType="phone"
+            android:layout_weight="10"
+            android:textSize="@dimen/large_text"
+            />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="5dp"
+            android:id="@+id/img_userhome_edit_phone"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_edit"
+            android:layout_gravity="end"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Email   "
+            android:gravity="center_vertical"
+            android:textSize="@dimen/large_text"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="---"
+            android:id="@+id/edit_userhome_email"
+            android:inputType="textEmailAddress"
+            android:layout_weight="10"
+            android:textSize="@dimen/large_text"
+            />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="5dp"
+            android:layout_weight="1"
+            android:id="@+id/img_userhome_edit_email"
+            android:src="@mipmap/ic_edit"
+            android:layout_gravity="end"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Username "
+            android:gravity="center_vertical"
+            android:textSize="@dimen/large_text"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="---"
+            android:id="@+id/edit_userhome_username"
+            android:inputType="textEmailAddress"
+            android:layout_weight="10"
+            android:textSize="@dimen/large_text"
+            />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="5dp"
+            android:layout_weight="1"
+            android:id="@+id/img_userhome_edit_username"
+            android:src="@mipmap/ic_edit"
+            android:layout_gravity="end"/>
+    </LinearLayout>
+</LinearLayout>

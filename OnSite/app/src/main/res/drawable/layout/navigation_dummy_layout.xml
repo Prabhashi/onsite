@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/appColor"
+    android:padding="@dimen/paddingSize2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="2">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:src="@drawable/preview_icon"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="8"
+            android:textSize="@dimen/text_size_5"
+            android:textColor="@color/textColorButton"
+            android:gravity="center"
+            android:text="Reporting Bugs"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8">
+        <ListView
+            android:layout_width="match_parent"
+            android:id="@+id/navigationListView"
+            android:layout_height="match_parent"></ListView>
+    </LinearLayout>
+</LinearLayout>
