@@ -117,7 +117,7 @@ public class CreateProjectActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
-                                Intent intent = new Intent(CreateProjectActivity.this,ViewTaskActivity.class);
+                                Intent intent = new Intent(CreateProjectActivity.this,ViewTasksActivity.class);
                                 startActivity(intent);
                                 finish();
 

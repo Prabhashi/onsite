@@ -21,10 +21,10 @@
         function login(user) {
           console.log("In login section");
             return $http({
-                url: webApi + '/user/login',
+                url: webApi + '/user/login/json',
                 method: "POST",
                 data: user,
-                headers: { 'Content-Type': 'application/json' }
+                headers : {'Content-Type': 'application/json'}
             }).then(handleSuccess, handleError('Loging error'));
         }
 
@@ -42,3 +42,4 @@
 
     }
 })();
+

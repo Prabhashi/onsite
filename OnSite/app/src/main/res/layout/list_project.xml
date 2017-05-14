@@ -3,82 +3,141 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-
+    android:id="@+id/list_project"
     android:padding="5dp">
-
-    <android.spport.v7.widget.CardView
+    <android.support.v7.widget.CardView
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TableLayout
+            android:id="@+id/root"
             android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <TableRow>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_weight="2"
-                android:text="Project Name" />
+            <TableRow>
 
-            <TextView
-                android:id="@+id/proName"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="16"
-                android:paddingBottom="2dip"
-                android:paddingTop="2dip"
-                android:text="Hoghway Extension"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:text="Project Name" />
 
-        <View
-            android:layout_height="1px"
-            android:background="#000000" />
+                <TextView
+                    android:id="@+id/txt_list_proName"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="16"
+                    android:paddingBottom="2dip"
+                    android:paddingTop="2dip"
+                    android:text="Hoghway Extension"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </TableRow>
 
-        <TableRow>
+            <View
+                android:layout_height="1px"
+                android:background="#000000" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Company Name" />
+            <TableRow>
 
-            <TextView
-                android:id="@+id/comName"
-                android:text="Access Project"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="2dip"
-                android:textColor="@color/colorAccent"
-                android:layout_weight="16"/>
-        </TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:text="Company Name" />
 
-        <TextView
-            android:id="@+id/startDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#5d5d5d"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/txt_list_comName"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="16"
+                    android:paddingBottom="2dip"
+                    android:text="Access Project"
+                    android:textColor="@color/colorAccent" />
+            </TableRow>
+            <View
+                android:layout_height="1px"
+                android:background="#000000" />
 
-        <TextView
-            android:id="@+id/endDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#5d5d5d"
-            android:textStyle="bold" />
+            <TableRow>
+                <TextView
+                    android:text="Start Date"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:id="@+id/txt_list_startDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10-04-2018"
+                    android:layout_weight="15"
+                    android:textColor="#5d5d5d"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/loc"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="2dip"
-            android:paddingTop="6dip"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-</TableLayout>
-    </android.spport.v7.widget.CardView>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="End Date"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:id="@+id/txt_list_endDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10-04-2018"
+                    android:layout_weight="15"
+                    android:textColor="#5d5d5d"
+                    android:textStyle="bold" />
+
+            </TableRow>
+
+            <View
+                android:layout_height="1px"
+                android:background="#000000" />
+
+            <TableRow>
+                <TextView
+                    android:text="Location"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/txt_list_loc"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="2dip"
+                    android:paddingTop="6dip"
+                    android:text="Hambantota"
+                    android:layout_weight="15"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Client/ Mgr"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_height="20dp"
+                    android:layout_width="20dp"
+                    android:src="@drawable/album1"
+                    android:layout_weight="1"
+                    ></ImageView>
+                <TextView
+                    android:id="@+id/txt_list_project_user"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="2dip"
+                    android:paddingTop="6dip"
+                    android:text="Hambantota"
+                    android:layout_weight="15"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+        </TableLayout>
+    </android.support.v7.widget.CardView>
 </LinearLayout>

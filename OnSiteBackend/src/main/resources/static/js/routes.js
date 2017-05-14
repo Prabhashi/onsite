@@ -100,18 +100,13 @@ angular
   
   .state('appSimple.login', {
     url: '/login',
-    templateUrl: 'views/login.html'
+    templateUrl: 'views/login.html',
+      controller: 'loginController'
   })
   .state('appSimple.register', {
     url: '/register',
-    templateUrl: 'views/pages/register.html'
+    templateUrl: 'views/pages/register.html',
+    controller: 'registerController'
   })
-  .state('appSimple.404', {
-    url: '/404',
-    templateUrl: 'views/pages/404.html'
-  })
-  .state('appSimple.500', {
-    url: '/500',
-    templateUrl: 'views/pages/500.html'
-  })
+ 
 }]);

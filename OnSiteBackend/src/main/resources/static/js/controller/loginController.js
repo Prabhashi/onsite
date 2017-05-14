@@ -11,20 +11,34 @@
     function loginController($scope , loginService , $state , $window , $rootScope) {
 
         $scope.login = function () {
+            console.log('test');
          loginService.login($scope.user).then(function success(data) {
            console.log("In login function");
-             if(data.status==200){
-                 localStorage.setItem("user" , JSON.stringify(data.data.user));
-                 $rootScope.user = data.data.user;
-                 localStorage.setItem("role", data.data.user.role);
-                 $rootScope.role = data.data.user.role;
-                 $state.go('app.main');
-             }else{
-                 $state.go('app.login');
+             if(data.data.state==="failed"){
+                 /*localStorage.setItem("user" , JSON.stringify(data.data.user));
+                 $rootScope.user = data.data.user;**/
+                  $state.go('appSimple.login');
                  window.alert("Invalid username and password!");
+                
+             }else{
+                
+                 
+                 localStorage.userId = data.data.state;
+                  localStorage.setItem("user" , JSON.stringify(data.data.user));
+                 $rootScope.user = data.data.user;
+                 
+                 $state.go('app.home');
              }
          });
         }
+        
+       $scope.redirect = function(){
+       $state.go('appSimple.register');
+       localStorage.currentUser = { username: login.username, token: result.data };//save current user name in a variable
+}
     }
+    
+    
 
 })();
+

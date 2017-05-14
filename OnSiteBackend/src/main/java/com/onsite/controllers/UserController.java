@@ -5,6 +5,7 @@ import com.onsite.globals.Const;
 import com.onsite.model.ResponseState;
 import com.onsite.model.User;
 import com.onsite.repository.UserRepository;
+import com.onsite.tools.ImageDecoder;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -33,34 +34,25 @@ public class UserController {
     private UserRepository userRepository;
 
 
-    /**
-     * Login authentication
-     *
-     * @param username
-     * @param password
-     * @return
-     */
     @RequestMapping(value = "/user/login", method = RequestMethod.POST, produces = "application/json")
-    public Map<String, String> userLogin(@RequestParam(value = "username") String username,
-                                         @RequestParam(value = "password") String password) {
+    public Map<String, String> userLogin(@RequestBody User u) {
 
         Map<String, String> response = new HashMap<>();
 
-        User user = userRepository.findByUsername(username);
-        if (user == null) response.put("state", "failed");
-
-
+        User user = userRepository.findByUsername(u.getUsername());
+        if (user == null) {
+            response.put("state", "failed");
+            return response;
+        }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-
-        if (encoder.matches(password, user.getPassword())) {
+////user input vs stored password
+        if (encoder.matches(u.getPassword(), user.getPassword())) {
             response.put("state", user.getId().toString());
             response.put("role", user.getRole());
         } else {
             response.put("state", "failed");
         }
         return response;
-
 
     }
 
@@ -88,44 +80,70 @@ public class UserController {
         return userRepository.findAll();
     }
 
+    @RequestMapping(value = "/user/find/{role}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<User> getByRole(@PathVariable String role) {
+        return userRepository.findByRole(role);
+    }
 
-    /**
-     * Registers user, returns if the user has been registered successfully
-     *
-     * @return success state
-     */
+
     @RequestMapping(value = "/user/register",
             method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseState registerUser(@RequestParam(value = "fullName", required = false) String fullName,
-                                      @RequestParam(value = "username", required = false) String username,
-                                      @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
-                                      @RequestParam(value = "password") String password,
-                                      @RequestParam(value = "deviceId") String deviceId,
-                                      @RequestParam(value = "email", required = false) String email,
-                                      @RequestParam(value = "role") String role
+    public ResponseState registerUser(@RequestBody User u
     ) {
-        User u = new User();
-        u.setFullName(fullName);
-        u.setPassword(password);
-        u.setUsername(username);
-        u.setPhoneNumber(phoneNumber);
-        u.setDeviceId(deviceId);
-        u.setEmail(email);
-        u.setRole(role);
+
+        u.setRole(u.getRole().toLowerCase());
         u.setPassword(new BCryptPasswordEncoder().encode(u.getPassword()));
         User identical = userRepository.findByUsername(u.getUsername());
         User identicalEmail = userRepository.findByEmail(u.getEmail());
         u.setProfilePicUrl("http://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png");
 
-        if (identical == null && identicalEmail == null) {
-            userRepository.save(u);
-            return new ResponseState("" + u.getId());
-        } else if( identical == null){
-            return new ResponseState("username_exists");
-        }else{
-            return  new ResponseState("email_exists");
+        if (identical != null) return new ResponseState("username_exists");
+        if (identicalEmail != null) return new ResponseState("email_exists");
+
+        userRepository.save(u);
+        return new ResponseState("" + u.getId());
+
+    }
+
+    @RequestMapping(value = "/user/edit",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseState editUser(@RequestBody User u
+    ) {
+
+        User existing = userRepository.findOne(u.getId());
+        if (existing == null)
+            return new ResponseState("failed");
+
+        if (u.getUsername() != null) {
+            //find if username exists
+
+            User identical = userRepository.findByUsername(u.getUsername());
+
+            if (identical == null || identical.getId() == u.getId())
+                existing.setUsername(u.getUsername());
+
         }
+        if (u.getEmail() != null)
+            existing.setEmail(u.getEmail());
+
+        if (u.getPhoneNumber() != null)
+            existing.setPhoneNumber(u.getPhoneNumber());
+
+        if (u.getProfilePicUrl() != null) {
+            String imageAsString = u.getProfilePicUrl();
+            ImageDecoder imageDecoder = new ImageDecoder();
+            String fileName = imageDecoder.decodeAndSave("profile", imageAsString);
+            existing.setProfilePicUrl("http://localhost:8080/images/get/" + fileName);
+        }
+
+        userRepository.save(existing);
+        return new ResponseState("" + u.getId());
 
     }
 
@@ -135,55 +153,47 @@ public class UserController {
      */
     @RequestMapping(value = "/user/update",
             method = RequestMethod.POST,
+            consumes = "application/json",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseState updateUser(
-
-            @RequestParam(value = "fullName", required = false) String fullName,
-            @RequestParam(value = "username", required = false) String username,
-            @RequestParam(value = "id") Integer userId,
-            @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
-            @RequestParam(value = "password", required = false) String password,
-            @RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture
-    ) {
-
-        User user = userRepository.findOne(userId);
-        if (username != null)
-            user.setUsername(username);
-
-        if (fullName != null)
-            user.setFullName(fullName);
-
-        if (phoneNumber != null)
-            user.setPhoneNumber(phoneNumber);
-
-        if (password != null)
-            user.setPassword(new BCryptPasswordEncoder().encode(password));
-
-        if (profilePicture != null)
-            saveProfilePicture(profilePicture, user);
+    public ResponseState updateUser(@RequestBody User user) {
 
 
+        if (user.getUsername() != null)
+            user.setUsername(user.getUsername());
+
+        if (user.getFullName() != null)
+            user.setFullName(user.getFullName());
+
+        if (user.getPhoneNumber() != null)
+            user.setPhoneNumber(user.getPhoneNumber());
+
+        if (user.getPassword() != null)
+            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+
+        //TODO : Update other attributes
         userRepository.save(user);
         return new ResponseState("success");
     }
 
     @RequestMapping(value = "/user/id/{id}")
     public User getUserById(@PathVariable Integer id) {
-        User u = userRepository.getOne(id);
-        if (u == null) {
-            u = new User();
-            u.setId(-1);
-        }
+        User u = userRepository.findOne(id);
         return u;
+    }
+
+    @RequestMapping(value = "/user/all/{role}")
+    public List<User> getUserByRole(@PathVariable String role) {
+        List<User> matches = userRepository.findByRole(role);
+        return matches;
     }
 
     @RequestMapping(value = "/user/like/{string}")
     public List<User> getUserById(@PathVariable String string) {
         List<User> matches = userRepository.findTop5ByFullNameContaining(string);
-
         return matches;
     }
 
+    //TODO send email
 
     private void saveProfilePicture(MultipartFile profilePic, User user) {
         byte[] bytes = new byte[0];
@@ -207,4 +217,7 @@ public class UserController {
             e.printStackTrace();
         }
     }
+
+
+
 }

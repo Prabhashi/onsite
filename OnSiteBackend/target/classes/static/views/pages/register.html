@@ -1,0 +1,113 @@
+<div class="app flex-row align-items-center" ng-controller='registerController'>
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-md-11">
+                <div class="card mx-2">
+                    <div class="card-block p-2">
+                        <form  name="signUpF" novalidate>
+                        <h1>Register</h1>
+                       
+
+                            
+                            <label class="mb-1 form-control-label text-primary" for="select">Full Name : </label>
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><i class="icon-user"></i>
+                            </span>
+                            <input type="text" class="form-control" ng-model="user.fullName" name="fullName" placeholder="Full Name" required>
+                            <span style="color:red" ng-show="signUpF.fullName.$dirty && signUpF.fullName.$error.required">User first name is required</span>
+                        </div>
+                            
+                          <label class="mb-1 form-control-label text-primary" for="select">Username : </label>
+                         <div class="input-group mb-1">
+                            <span class="input-group-addon"><i class="icon-user"></i>
+                            </span>
+                            <input type="text" class="form-control" ng-model="user.username" name="username" placeholder="User Name" required>
+                            <span style="color:red" ng-show="signUpF.username.$dirty && signUpF.username.$error.required">User name is required</span>
+                        </div>   
+                            
+                        <label class="mb-1 form-control-label text-primary" for="select">Email : </label>
+                         <div class="input-group mb-1">
+                            <span class="input-group-addon"><i class="icon-user"></i>
+                            </span>
+                            <input type="email" class="form-control" ng-model="user.email" name="email" placeholder="Email" required>
+                            <span style="color:red" ng-show="signUpF.email.$dirty && signUpF.email.$error.required">Email is required</span>
+                        </div>    
+                            
+                            
+                          
+                            
+                           <label class="mb-1 form-control-label text-primary" for="select">Phone Number : </label>
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><i class="icon-user"></i>
+                            </span>
+                            <input type="text" class="form-control"  ng-model="user.phoneNumber" name="phoneNumber"  placeholder="Phone Number" required>
+                            <span style="color:red" ng-show="signUpF.phoneNumber.$dirty && signUpF.phoneNumber.$error.required">Phone Number is required</span>
+                        </div>  
+                              
+                            
+                             
+                        <label class="mb-1 form-control-label text-primary" for="select">Password : </label>
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><i class="icon-lock"></i>
+                            </span>
+                            <input type="password" class="form-control"  ng-model="user.password" id="password" name="password" placeholder="Password" ng-minlength="4"  ng-maxlength="14" required>
+                                <span style="color:red" ng-show="signUpF.password.$dirty && signUpF.password.$error.required">Password is required</span>
+                                <span style="color:red" ng-show="signUpF.password.$dirty && signUpF.password.$error.password">Invalid password</span>
+                                <span style="color:red" ng-show="signUpF.password.$dirty && signUpF.password.$error.minlength">Too short</span>
+					           <span style="color:red" ng-show="signUpF.password.$dirty && signUpF.password.$error.maxlength">Too long</span>
+                        </div>
+                            
+                            
+                      
+                       
+                      
+                        <label class="mb-1 form-control-label text-primary" for="select">Role : </label>
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><i class="fa fa-users"></i></span>
+                            <select id="select" name="select"  ng-model="user.role"  class="form-control" size="1" required>
+                               <option value="Admin">Manager</option>
+                                <option value="Officer">Client</option>
+                                <option value="Observer">Contractor</option>
+                            </select> 
+                        </div>
+                            
+                            
+                        <button type="button" ng-click="register()" ng-disabled="signUpF.$invalid" class="btn btn-block btn-primary">Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+                            
+                            
+                     
+                            
+                            
+                             
+                       
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                      
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                        
+                            
+                       

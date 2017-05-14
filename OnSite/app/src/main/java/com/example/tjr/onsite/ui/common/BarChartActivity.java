@@ -55,7 +55,7 @@ public class BarChartActivity extends AppCompatActivity {
 
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, Const.URL_PREFIX + "task/all/" + Globals.projectId, null, new Response.Listener<JSONArray>() {
+                (Request.Method.GET, Const.URL_PREFIX + "task/all/" + Globals.projectId+"/"+Globals.userId, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         Project project = new Project();
@@ -70,23 +70,23 @@ public class BarChartActivity extends AppCompatActivity {
 
 
                                 String endDate = obj.getString("estimatedEndDate");
-                                String[] endDateSplit = startDate.split("/");
-                                //int days = Integer.valueOf(endDateSplit[2]) - Integer.valueOf(startDateSplit[2]) + (Integer.valueOf(endDateSplit[1]) - Integer.valueOf(startDateSplit[1])) * 30;
-                                //finding daydifference
-                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM.yyyy");
+
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                                 try {
 
-                                    Date date1 = sdf.parse(startDate);
-                                    Date date2 = sdf.parse(endDate);
+                                    Date date1 = sdf.parse(startDate.replace("-","/"));
+                                    Date date2 = sdf.parse(endDate.replace("-","/"));
 
                                     diff = Validation.getDifference(date1, date2);
-                                    Toast.makeText(getApplicationContext(), Float.toString(diff), Toast.LENGTH_LONG).show();
+                                    System.out.println(diff);
+
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
 
 
-                                barEntryList.add(new BarEntry(Float.valueOf(taskID), new Random().nextInt(40) + 1));
+                                barEntryList.add(new BarEntry(Float.parseFloat(taskID),diff ));
+                                /*new Random().nextInt(30)+1)*/
                             }
                             //context.updateProjectList(list);
                             BarDataSet set = new BarDataSet(barEntryList, "Tasks");

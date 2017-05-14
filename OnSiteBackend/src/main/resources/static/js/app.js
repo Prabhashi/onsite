@@ -25,7 +25,7 @@ angular
 }])
 
 .constant('serverSettings', {
-          webApi: 'localhost:8080',
+          webApi: 'http://localhost:8080',
 })
 .run(['$rootScope', '$state', '$stateParams', function($rootScope, $state, $stateParams) {
   $rootScope.$on('$stateChangeSuccess',function(){

@@ -1,11 +1,18 @@
 package com.onsite.controllers;
 
 import com.onsite.model.*;
+import com.onsite.repository.IssueRepository;
 import com.onsite.repository.ProjectRepository;
 import com.onsite.repository.UserRepository;
+import com.onsite.tools.DocumentGenerator;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +28,8 @@ public class ProjectController {
     private ProjectRepository projectRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private IssueRepository issueRepository;
 
 
     /**
@@ -41,12 +50,12 @@ public class ProjectController {
         //TODO: rewrite concerning user roles
         User user = userRepository.findOne(userId);
 
-        if("manager".equals(user.getRole())){
+        if("manager".equals(user.getRole().toLowerCase())){
             //if the request is from a manager
             return  projectRepository.findByManager(user);
         }
 
-        if("client".equals(user.getRole())){
+        if("client".equals(user.getRole().toLowerCase())){
             //if the request is from a client
             return  projectRepository.findByClient(user);
         }
@@ -94,7 +103,7 @@ public class ProjectController {
         //see if the creator is a manager
         User creator = userRepository.findOne(creatorId);
 
-        if("manager".equals(creator.getRole())){
+        if("manager".equals(creator.getRole().toLowerCase())){
             // if the creator is a manager
             p.setManager(creator);
             p.setManagerAccepted(true);
@@ -104,7 +113,7 @@ public class ProjectController {
                 p.setClient(client);
                 p.setClientAccepted(false);
             }
-        }else if("client".equals(creator.getRole())){
+        }else if("client".equals(creator.getRole().toLowerCase())){
             p.setClient(creator);
             p.setClientAccepted(true);
 
@@ -112,7 +121,7 @@ public class ProjectController {
             User manager = userRepository.findByUsername(otherUsername);
             if(manager != null) {
                 p.setManager(manager);
-                p.setManagerAccepted(true);
+                p.setManagerAccepted(false);
             }
         }
         projectRepository.save(p);
@@ -177,16 +186,15 @@ public class ProjectController {
 
     @RequestMapping(value = "/project/accept",
             method = RequestMethod.POST,
+            consumes = "application/json",
             produces = "application/json")
-    public ResponseState acceptTask(
-            @RequestParam(value = "issue") Integer taskId,
-            @RequestParam(value = "response") String response,
-            @RequestParam(value = "assigneeUsername") Integer userId
+    public ResponseState acceptTask(@RequestBody String jsonString
     )
     {
-        Project project = projectRepository.findOne(taskId);
-        User user = userRepository.findOne(userId);
-
+        JSONObject object = new JSONObject(jsonString);
+        Project project = projectRepository.findOne(object.getInt("projectId"));
+        User user = userRepository.findOne(object.getInt("userId"));
+        String response = object.getString("response");
 
         //handle manager, client acceptance
         switch (user.getRole()){
@@ -216,5 +224,25 @@ public class ProjectController {
 
     }
 
+
+    @RequestMapping(value = "/documents/get/{projectId}", method = RequestMethod.GET, produces = "application/pdf")
+    public void getFile(
+            @PathVariable("projectId") Integer projectId,
+            HttpServletResponse response) {
+        try {
+            // get your file as InputStream
+            List<Issue> issues = issueRepository.findByProjectProjectId(projectId);
+            Project p = projectRepository.findByProjectId(projectId);
+            String fileName = new DocumentGenerator().generateIssueReport(projectId,issues,p);
+            InputStream is = new FileInputStream(fileName);
+            // copy it to response's OutputStream
+            org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
+        } catch (IOException ex) {
+            //log.info("Error writing file to output stream. Filename was '{}'", fileName, ex);
+            throw new RuntimeException("IOError writing file to output stream");
+        }
+
+    }
 
 }

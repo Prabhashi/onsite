@@ -28,23 +28,4 @@ public class DocumentsController {
     ProjectRepository projectRepository;
 
 
-    @RequestMapping(value = "/documents/get/{projectId}", method = RequestMethod.GET, produces = "application/pdf")
-    public void getFile(
-            @PathVariable("projectId") Integer projectId,
-            HttpServletResponse response) {
-        try {
-            // get your file as InputStream
-            List<Issue> issues = issueRepository.findByProjectProjectId(projectId);
-            Project p = projectRepository.findOne(projectId);
-            String fileName = new DocumentGenerator().generateIssueReport(projectId,issues,p);
-            InputStream is = new FileInputStream(fileName);
-            // copy it to response's OutputStream
-            org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
-            response.flushBuffer();
-        } catch (IOException ex) {
-            //log.info("Error writing file to output stream. Filename was '{}'", fileName, ex);
-            throw new RuntimeException("IOError writing file to output stream");
-        }
-
-    }
 }

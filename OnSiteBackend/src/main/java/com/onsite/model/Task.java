@@ -20,9 +20,6 @@ public class Task {
     @OneToOne
     private User assignee;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Task> predecessors;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Project project;
 
@@ -64,14 +61,6 @@ public class Task {
 
     public void setAssignee(User assignee) {
         this.assignee = assignee;
-    }
-
-    public List<Task> getPredecessors() {
-        return predecessors;
-    }
-
-    public void setPredecessors(List<Task> predecessors) {
-        this.predecessors = predecessors;
     }
 
     public String getTaskName() {

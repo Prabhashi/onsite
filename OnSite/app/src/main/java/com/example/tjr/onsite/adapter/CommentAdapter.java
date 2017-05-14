@@ -12,7 +12,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.example.tjr.onsite.R;
 import com.example.tjr.onsite.app.Const;
 import com.example.tjr.onsite.app.MyVolley;
-import com.example.tjr.onsite.model.Comment;
+import com.example.tjr.onsite.model.json.Comment;
 
 import java.util.List;
 
@@ -43,12 +43,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
     @Override
     public void onBindViewHolder(CommentHolder holder, int position) {
         Comment comment = comments.get(position);
-        holder.commenterName.setText(comment.commentorName);
-        holder.commentBody.setText(comment.commentBody);
+        holder.commenterName.setText(comment.getCommentor().getFullName());
+        holder.commentBody.setText(comment.getCommentBody());
 
         //set image to the comment
         ImageLoader imageLoader = MyVolley.getImageLoader();
-        imageLoader.get(Const.URL_PREFIX + comment.imageUrl,ImageLoader.getImageListener( holder.commenterImage,0,0));
+        imageLoader.get(comment.getCommentor().getProfilePicUrl(),ImageLoader.getImageListener( holder.commenterImage,0,0));
     }
 
     public void setComments(List<Comment> comments) {

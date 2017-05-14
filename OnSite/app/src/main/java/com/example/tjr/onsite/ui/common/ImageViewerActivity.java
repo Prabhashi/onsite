@@ -22,5 +22,6 @@ public class ImageViewerActivity extends AppCompatActivity {
         WebView wv = (WebView) findViewById(R.id.web_image_viewer_main_view);
         wv.getSettings().setBuiltInZoomControls(true);
         wv.loadUrl(imageUrl);
+
     }
 }

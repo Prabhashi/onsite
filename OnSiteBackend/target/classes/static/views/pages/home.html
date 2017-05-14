@@ -1,4 +1,4 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn"  ng-controller="homeController">
      <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
@@ -8,18 +8,18 @@
                 </div>
                 <!-- /. ROW  -->
 
-                <div class="leftdiv" >
-					<a href="index.html"> <img src="assets/images/arrow.png"> Construction project in UoM </a><br /><br />
-					<a href="colomboSite.html"> <img src="assets/images/arrow.png"> Construction project in Colombo </a><br /><br />
-					<a href="#">  <img src="assets/images/arrow.png">Construction project in Kandy </a><br /><br />
-					<a href="#"> <img src="assets/images/arrow.png"> Millenium Home Pro98</a><br /><br />
-					<a href="#"> <img src="assets/images/arrow.png"> Pro100 </a><br /><br />
-					<a href="#"> <img src="assets/images/arrow.png"> Pro101 </a><br /><br />
-					<a href="#"> <img src="assets/images/arrow.png"> Pro105 </a><br /><br />
-					<a href="#"> <img src="assets/images/arrow.png"> Pro110 </a><br /><br />
-					<a href="#"> <img src="assets/images/arrow.png"> Pro134 </a><br /><br />
-				
-				
+                <div class="leftdiv">
+					<table>
+                        <tr>
+                           <!-- <td>dsrs</td>
+                            <td>sdas</td>  -->
+                        </tr>
+                        <tr ng-repeat="project in projects">
+                            <td>{{project.projectID}}</td>
+                            <td>{{project.projectName}}</td>
+                            <td><button ng-click="getSchedule(project.projectID)">Get Schedule</button></td>
+                        </tr>
+                    </table>
 				</div>
 				
 				<div class="center">
@@ -27,14 +27,14 @@
 					
 					<div class= "content">
 					<h3> <u>Construction Project in UoM </u></h3>
-					<br /><br />
-					<p>Client company: University of Moratuwa <br />
-					Construction company: ProCons (pvt) ltd <br />
-					  Location: University Of Moratuwa, Katubadde <br />
-					Estimated Time : 2 years <br />
-					 Started Date : 21.12.2016 <br />
-					 Sub-Contractors: NewConstructions pvt ltd and EngineersLanka company <br />
-					 Construction Type: Building </p><br /><br /><br /><br />
+					   
+                        <ul class="list">
+                             <li ng-repeat="location in locations">
+                                <a href="#">{{location.id}}. {{location.name}}</a>
+                             </li>
+                       </ul>
+<map></map> 
+                        
 					</div>
 				</div><br /><br /><br /><br />
 				

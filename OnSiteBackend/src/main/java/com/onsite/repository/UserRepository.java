@@ -18,4 +18,6 @@ public interface UserRepository extends JpaRepository<User,Integer> {
      List<User> findTop5ByFullNameContaining(String partialString);
 
     User findByEmail(String email);
+
+    List<User> findByRole(String role);
 }

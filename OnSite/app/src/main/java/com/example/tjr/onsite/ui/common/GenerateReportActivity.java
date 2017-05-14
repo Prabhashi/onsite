@@ -41,7 +41,7 @@ public class GenerateReportActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 final DownloadTask downloadTask = new DownloadTask(GenerateReportActivity.this);
-                downloadTask.execute(Const.URL_PREFIX+"documents/get/1");
+                downloadTask.execute(Const.URL_PREFIX+"documents/get/"+Globals.projectId);
             }
         });
 

@@ -1,6 +1,6 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn" ng-controller='documentController'>
    <div> <h2>Generate Issue Document</h2> </div>
    <div><p>Click here to generate a complete issue report on the project</p></div>
-   <div><button type="button" class="btn btn-success active">Get PDF</button></div>
+   <div><a ng-href="http://localhost:8080/documents/get/{{userID}}" target="_self"><button type="button" ng-click="pdf()" class="btn btn-success active">Get PDF</button></a></div>
    
 </div>

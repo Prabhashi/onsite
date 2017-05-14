@@ -4,6 +4,7 @@ import com.onsite.model.Task;
 import com.onsite.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -14,4 +15,7 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
     public List<Task> findByProjectProjectId(Integer projectId);
 
     List<Task> findByAssignee(User user);
+
+    @Transactional
+    void deleteByTaskId(Integer taskId);
 }

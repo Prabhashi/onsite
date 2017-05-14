@@ -33,6 +33,12 @@
         <item>Ascending</item>
     </string-array>
 
+    <string-array name="role">
+        <item>Client</item>
+        <item>Manager</item>
+        <item>Contractor</item>
+    </string-array>
+
 
     <string name="edt_userid">User ID</string>
     <string name="edt_password">Password</string>
@@ -63,5 +69,17 @@
         <item>COLORATION</item>
         <item>UNDERLABEL</item>
         <item>TEXT_INPUT_LAYOUT</item>
+    </string-array>
+    <string-array name="issue_type">
+        <item>Serviceability</item>
+        <item>Suggestion</item>
+        <item>Improvement</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="severity">
+        <item>High</item>
+        <item>Medium</item>
+        <item>Law</item>
     </string-array>
 </resources>

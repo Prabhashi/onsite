@@ -28,6 +28,9 @@ public class Message {
     @JoinColumn(name = "reciever")
     private User reciever;
 
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date sentTime;
+
     private String messageBody;
 
     public User getSender() {
@@ -62,7 +65,5 @@ public class Message {
         this.sentTime = sentTime;
     }
 
-    @Temporal(value = TemporalType.TIMESTAMP)
-    private Date sentTime;
 
 }

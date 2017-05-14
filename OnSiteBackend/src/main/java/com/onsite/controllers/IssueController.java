@@ -2,14 +2,18 @@ package com.onsite.controllers;
 
 import com.onsite.globals.Const;
 import com.onsite.model.*;
+import com.onsite.model.client.ClientIssue;
 import com.onsite.repository.*;
 import com.onsite.tools.FileHandler;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.h2.table.Plan;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -59,7 +63,8 @@ public class IssueController {
             @RequestParam(value = "issueType") String issueType,
             @RequestParam(value = "severity") String severity,
             @RequestParam(value = "tags", required = false) String tags,
-            @RequestParam(value = "image", required = false) MultipartFile image
+            @RequestParam(value = "image", required = false) MultipartFile image,
+            @RequestParam(value = "imageString", required = false) String imageString
 
     ) {
 
@@ -89,12 +94,66 @@ public class IssueController {
         issueRepository.saveAndFlush(issue);
 
         //TODO Change this to accept in byte form
+       if(image != null)
         addIssueImage(issue.getIssueId(), image);
 
+       if(imageString != null){
+          // Bitmap bitmap
+       }
 
         issueRepository.save(issue);
         return new ResponseState("success");
     }
+
+
+    @RequestMapping(
+            value = "issues/create/json",
+            method = RequestMethod.POST,
+            produces = "application/json",
+            consumes = "application/json"
+    )
+    public ResponseState createIssueJson(@RequestBody ClientIssue clientIssue){
+        Issue issue = new Issue();
+        User reporter = userRepository.findOne(clientIssue.getReporterId());
+        User assignee = userRepository.findByUsername(clientIssue.getAssigneeUsername());
+        Project project = projectRepository.findOne(clientIssue.getProjectId());
+
+        issue.setAssignee(assignee);
+        issue.setReporter(reporter);
+        if(assignee != null)
+            issue.setAssigneeAccepted(false);
+        issue.setProject(project);
+        issue.setIssueTitle(clientIssue.getIssueTitle());
+        issue.setDescription(clientIssue.getDescription());
+        issue.setIssueType(clientIssue.getIssueType());
+        issue.setSeverity(clientIssue.getSeverity());
+
+        //saving image as jpg
+        byte bytes[] = Base64.decodeBase64(clientIssue.getImageString());
+        FileOutputStream fos = null;
+
+        long l = System.currentTimeMillis();
+        byte[] data = Base64.decodeBase64(clientIssue.getImageString());
+        try{
+
+            File file = new File(l+".jpg");
+            file.createNewFile();
+            fos = new FileOutputStream(file);
+            fos.write(bytes);
+            fos.close();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        issue.setImageUrls(new ArrayList<>());
+        issue.getImageUrls().add("http://localhost:8080/images/get/"+l);
+        issueRepository.save(issue);
+        //TODO : complete issue creation
+        return new ResponseState("success");
+    }
+
+
+
 
     /**
      * Returns all the issues for the given project
@@ -177,6 +236,29 @@ public class IssueController {
             @RequestParam(value = "tag") String tag) {
         Issue issue = issueRepository.findOne(issueId);
         issue.getTags().add(tag);
+        issueRepository.save(issue);
+        return new ResponseState("success");
+    }
+
+
+    @RequestMapping(
+            value = "issues/set/location",
+            method = RequestMethod.POST,
+            produces = "application/json")
+    public ResponseState setIssueLocation(
+
+            @RequestBody String tag) {
+        JSONObject object = new JSONObject(tag);
+        int planId = object.getInt("planId");
+        int issueId = object.getInt("issueId");
+        float xLocation =(float) object.getDouble("x");
+        float yLocation =(float) object.getDouble("y");
+
+        Issue issue = issueRepository.findOne(issueId);
+        DesignPlan plan = plansRepository.findOne(planId);
+        issue.setLocationX(xLocation);
+        issue.setLocationY(yLocation);
+        issue.setPlan(plan);
         issueRepository.save(issue);
         return new ResponseState("success");
     }
@@ -291,4 +373,9 @@ public class IssueController {
         return  new ResponseState("error");
 
     }
+
+
+    /***************************************************************************************************/
+    /* specially modified methods for json incompatibility*/
+    /**************************************/
 }

@@ -1,4 +1,4 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn" ng-controller="scheduleController">
     <h2>Schedule</h2>
 		<div class="col-md-6">
 	<div class="card">
@@ -11,12 +11,24 @@
                 <div class="card">
                 
                 <div class="card-block">
+<!--
                     <button type="button" class="btn btn-outline-secondary btn-lg btn-block">Task 1</button>
                     <button type="button" class="btn btn-outline-primary btn-lg btn-block">Task 2</button>
                     <button type="button" class="btn btn-outline-success btn-lg btn-block">Task 3</button>
                     <button type="button" class="btn btn-outline-info btn-lg btn-block">Task 4</button>
                     <button type="button" class="btn btn-outline-warning btn-lg btn-block">Task 5</button>
                     <button type="button" class="btn btn-outline-danger btn-lg btn-block">Task 6</button>
+-->
+                    <table>
+                        <tr>
+                            <td>dsrs</td>
+                            <td>sdas</td>
+                        </tr>
+                        <tr ng-repeat="schedule in schedules">
+                            <td>{{project.projectID}}</td>
+                            <td>{{project.projectName}}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
 			</div></div>

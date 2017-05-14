@@ -14,6 +14,7 @@ public class DesignPlan {
     @ManyToOne(fetch = FetchType.LAZY)
     private Project project;
     private String planImageUrl;
+    private String description;
 
     public Integer getPlanId() {
         return planId;
@@ -45,5 +46,13 @@ public class DesignPlan {
 
     public void setPlanImageUrl(String planImageUrl) {
         this.planImageUrl = planImageUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

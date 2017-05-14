@@ -5,9 +5,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.tjr.onsite.adapter.CustomAdapterList;
+import com.example.tjr.onsite.adapter.SelectUserAdapter;
 import com.example.tjr.onsite.app.Const;
 import com.example.tjr.onsite.app.MyVolley;
-import com.example.tjr.onsite.model.User;
+import com.example.tjr.onsite.model.json.User;
+import com.example.tjr.onsite.ui.common.SelectUserActivity;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,13 +24,19 @@ import java.util.ArrayList;
  */
 
 public class SelectUserController {
-    CustomAdapterList adapter ;
 
-    public void getSuggestions(CustomAdapterList ad){
-        this.adapter = ad;
+    SelectUserActivity context;
+    SelectUserAdapter adapter;
+
+    public SelectUserController(SelectUserAdapter adapter, SelectUserActivity context) {
+        this.adapter = adapter;
+        this.context = context;
+    }
+
+    public void fillUsers(String role){
         MyVolley.getRequestQueue().cancelAll("TAG");
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, Const.URL_PREFIX+"/user/all", null, new Response.Listener<JSONArray>() {
+                (Request.Method.GET, Const.URL_PREFIX+"/user/all/"+role, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
@@ -35,15 +45,12 @@ public class SelectUserController {
 
                             for (int j = 0;j < lim; j++) {
                                 JSONObject object = response.getJSONObject(j);
-                                User u = new User();
-                                u.fullName = object.getString("fullName");
-                                u.username = object.getString("username");
-                                u.imageUrl = object.getString("profilePicUrl");
-
+                                Gson gson = new GsonBuilder().create();
+                                User u = gson.fromJson(object.toString(),User.class);
                                 list.add(u);
                             }
-                            adapter.Users.clear();
-                            adapter.Users.addAll(list);
+                            adapter.users.clear();
+                            adapter.users.addAll(list);
                             adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             System.out.println(e);

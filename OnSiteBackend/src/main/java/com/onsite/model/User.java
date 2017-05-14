@@ -86,7 +86,6 @@ public class User implements Serializable{
         this.phoneNumber = phoneNumber;
     }
 
-    @JsonIgnore
     public String getDeviceId() {
         return deviceId;
     }

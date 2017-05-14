@@ -55,14 +55,12 @@ public class ScheduleController {
     )
     {
         Task t = new Task();
-        t.setPredecessors(new ArrayList<>());
+
         User assignee = userRepository.findById(assigneeId);
         Project project = projectRepository.findOne(projectId);
         t.setProject(project);
         t.setAssignee(assignee);
-        List<Integer> predecessors = StringSplitter.splitIntoInts(predecessorIds,",");
-        for(Integer p: predecessors)
-            t.getPredecessors().add(taskRepository.findOne(p));
+
         t.setTaskName(taskName);
         t.setStartDate(startDate);
         t.setEstimatedEndDate(estimatedEndDate);
@@ -141,8 +139,21 @@ public class ScheduleController {
        return taskRepository.findOne(taskId);
 
     }
+//mark as completed
+    @RequestMapping(
+            value = "/task/markascompleted/{taskId}",
+            method = RequestMethod.GET,
+            produces = "application/json")
+    public ResponseState markAsCompleted(
+            @PathVariable Integer taskId
+    )
+    {
+       Task task = taskRepository.findOne(taskId);
+       task.setCompleted(true);
+       taskRepository.save(task);
+        return new ResponseState("success");
 
-
+    }
 
     @RequestMapping(value = "/task/accept",
             method = RequestMethod.POST,
@@ -173,7 +184,19 @@ public class ScheduleController {
 
     }
 
+//deletion
+@RequestMapping(
+        value = "/task/delete/{taskId}",
+        method = RequestMethod.DELETE,
+        produces = "application/json")
+public ResponseState deleteTask(
+        @PathVariable Integer taskId
+)
+{
+    taskRepository.deleteByTaskId(taskId);
+    return new ResponseState("success");
 
+}
 
 
 

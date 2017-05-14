@@ -28,12 +28,11 @@ public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.IssueHolder>
     private List<Issue> issues;
     private LayoutInflater inflater;
     private IssuesActivity context;
-    private IssueAdapter adapter;
+
     public IssueAdapter(List<Issue> issues , IssuesActivity context ) {
         this.issues = issues;
         this.inflater = LayoutInflater.from(context);
         this.context = context;
-        this.adapter = this;
     }
 
     @Override

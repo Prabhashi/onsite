@@ -90,4 +90,27 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <TextView
+        android:text="I like to use onsite as a :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userNameText"
+        android:layout_toLeftOf="@+id/userNameText"
+        android:layout_weight="16"
+        android:layout_marginRight="45dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/textView7"
+        android:layout_above="@+id/signUpButton" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:text="Select your role"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:entries="@array/role"
+        android:layout_alignTop="@+id/textView7"
+        android:layout_toRightOf="@+id/textView7"
+        android:layout_toEndOf="@+id/textView7" />
 </RelativeLayout>

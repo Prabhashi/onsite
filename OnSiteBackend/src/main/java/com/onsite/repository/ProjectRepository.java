@@ -15,4 +15,6 @@ public interface ProjectRepository extends JpaRepository<Project, Integer>{
     List<Project> findByManager(User user);
 
     List<Project> findByClient(User user);
+
+    Project findByProjectId(Integer projectId);
 }

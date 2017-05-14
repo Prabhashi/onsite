@@ -8,8 +8,7 @@
 <label>Not Resolved : <input type="text"></label>
 </div>
 <div>
-<div class="col-md-6" >pie chart should add here</div>
-<div class="col-md-6">bar chart should add here</div>
+
 </div>
 	<br><br>
 	<div class="col-md-6">
@@ -20,13 +19,23 @@
                    
                 </div>
                 <div class="card-block">
-                    <button type="button" class="btn btn-danger btn-lg btn-block">Floor Tile</button>
-                    <button type="button" class="btn btn-danger btn-lg btn-block">Crack</button>
-                    <button type="button" class="btn btn-danger btn-lg btn-block">Broken</button>
-                    <button type="button" class="btn btn-danger btn-lg btn-block">Block level button</button>
-                    <button type="button" class="btn btn-danger btn-lg btn-block">Block level button</button>
-                    <button type="button" class="btn btn-danger btn-lg btn-block">Block level button</button>
-                    
+
+                   
+                    <table>
+                        <tr>
+                           <!-- <td>dsrs</td>
+                            <td>sdas</td>   -->
+                        </tr>
+                        <tr ng-repeat="project in projects">
+                            <td>{{project.projectID}}</td>
+                            <td>{{project.projectName}}</td>
+                            <ul>
+                                <li ng-repeat="image in projects.imageUrls">
+                                    <img ng-src="{{image}}" />
+                                </li>
+                            </ul>
+                        </tr>
+                    </table>
                 </div>
 			</div></div>
             </div>

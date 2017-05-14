@@ -39,6 +39,12 @@ public class ImageController {
         return  getImage(url);
     }
 
+@RequestMapping(value = "images/get/{imageName}", produces = "image/jpg")
+    public byte[] getByName(@PathVariable String imageName){
+        return getImage(imageName);
+
+    }
+
 
     byte [] getImage(String url){
         try {

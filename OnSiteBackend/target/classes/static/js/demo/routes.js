@@ -71,7 +71,7 @@ angular
   .state('app.documents', {
     url: '/documents',
     templateUrl: 'views/pages/documents.html',
-      
+    controller:'documentController',  
     ncyBreadcrumb: {
       label: 'Documents'
     }
@@ -79,7 +79,7 @@ angular
   .state('app.track', {
     url: '/track',
     templateUrl: 'views/pages/track.html',
-      
+    controller:'trackController', 
     ncyBreadcrumb: {
       label: 'Track'
     }
@@ -87,7 +87,7 @@ angular
   .state('app.schedule', {
     url: '/schedule',
     templateUrl: 'views/pages/schedule.html',
-      
+    controller:'scheduleController', 
     ncyBreadcrumb: {
       label: 'Schedule'
     }
@@ -103,7 +103,7 @@ angular
   .state('app.home', {
     url: '/home',
     templateUrl: 'views/pages/home.html',
-      
+    controller:'homeController', 
     ncyBreadcrumb: {
       label: 'Home'
     }
@@ -149,43 +149,6 @@ angular
       }]
     }
   })
-  .state('app.widgets', {
-    url: '/widgets',
-    templateUrl: 'views/widgets.html',
-    ncyBreadcrumb: {
-      label: 'Widgets'
-    },
-    resolve: {
-      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-        // you can lazy load controllers
-        return $ocLazyLoad.load({
-          files: ['js/controllers/widgets.js']
-        });
-      }]
-    }
-  })
-  .state('app.charts', {
-    url: '/charts',
-    templateUrl: 'views/charts.html',
-    ncyBreadcrumb: {
-      label: 'Charts'
-    },
-    resolve: {
-      // Plugins loaded before
-      // loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
-      //     return $ocLazyLoad.load([
-      //         {
-      //             serial: true,
-      //             files: ['js/libs/Chart.min.js', 'js/libs/angular-chart.min.js']
-      //         }
-      //     ]);
-      // }],
-      loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-        // you can lazy load files for an existing module
-        return $ocLazyLoad.load({
-          files: ['js/controllers/charts.js']
-        });
-      }]
-    }
-  })
+ 
+  
 }]);

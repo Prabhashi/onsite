@@ -46,7 +46,7 @@ public class Issue {
     @OneToOne
     private DesignPlan plan;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIME)
     private Date reportedDate;
 
 

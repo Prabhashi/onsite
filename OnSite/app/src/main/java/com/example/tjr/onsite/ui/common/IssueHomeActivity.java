@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -32,12 +33,13 @@ import com.android.volley.toolbox.ImageLoader;
 import com.bumptech.glide.Glide;
 import com.example.tjr.onsite.R;
 import com.example.tjr.onsite.adapter.CommentAdapter;
+import com.example.tjr.onsite.app.Const;
 import com.example.tjr.onsite.app.MenuConstants;
 import com.example.tjr.onsite.app.MyVolley;
 import com.example.tjr.onsite.controllers.IssueHomeController;
-import com.example.tjr.onsite.model.Comment;
+import com.example.tjr.onsite.model.json.Comment;
 import com.example.tjr.onsite.model.DataSource;
-import com.example.tjr.onsite.model.DetailedIssue;
+import com.example.tjr.onsite.model.json.Issue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -66,10 +68,12 @@ public class IssueHomeActivity extends AppCompatActivity {
 
     //variables needed for operations
     private int issueId;
-    private DetailedIssue issue;
+    private Issue issue;
     private int currentImage = 0;
 
     private IssueHomeController controller = new IssueHomeController();
+    private ImageView assigneeImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +95,7 @@ public class IssueHomeActivity extends AppCompatActivity {
         issueImage = (ImageView) findViewById(R.id.im_switch_issue_home_image);
         stateImage = (ImageView) findViewById(R.id.im_issue_home_resolved);
         reporterImage = (ImageView) findViewById(R.id.im_issue_home_reporter_image);
+        assigneeImage = (ImageView) findViewById(R.id.im_issue_home_assignee_image);
         planImage = (ImageView) findViewById(R.id.img_issue_home_map);
 
         addComment = (Button) findViewById(R.id.btn_issue_home_add_comment);
@@ -113,28 +118,28 @@ public class IssueHomeActivity extends AppCompatActivity {
         commentsRecyclerView.setAdapter(adapter);
         //Query and set issue details
         //passes issue id with it
-        DataSource.retrieveIssueData(this, issueId);
+        controller.retrieveIssueData(this, issueId);
 
     }
 
     Bitmap theBitmap;
-    public void updateIssueData(final DetailedIssue issue) {
+    public void updateIssueData(final Issue issue) {
         this.issue = issue;
-        issueName.setText(issue.name);
-        date.setText(issue.date);
-        severity.setText(issue.severity + " severity");
-        description.setText(issue.description);
-        reporterName.setText(issue.reporterName);
+        issueName.setText(issue.getIssueTitle());
+        date.setText(issue.getReportedDate());
+        severity.setText(issue.getSeverity() + " severity");
+        description.setText(issue.getDescription());
+        reporterName.setText(issue.getReporter().getFullName());
 
-        if (issue.images != null && issue.images.size() > 0)
-            imageLoader.get(issue.images.get(0), ImageLoader.getImageListener(issueImage, 0, 0));
-        imageLoader.get(issue.reporterImageUrl,ImageLoader.getImageListener(reporterImage,0,0));
-        if(issue.planImageUrl != null) {
-            loadPlan(issue.locationX,issue.locationY);
+        if (issue.getImageUrls() != null && issue.getImageUrls().size() > 0)
+            imageLoader.get(issue.getImageUrls().get(0), ImageLoader.getImageListener(issueImage, 0, 0));
+        imageLoader.get(issue.getReporter().getProfilePicUrl().replace("localhost", Const.BASE_IP),ImageLoader.getImageListener(reporterImage,0,0));
+        if(issue.getPlan() != null) {
+            loadPlan(issue.getPlan().getPlanImageUrl().replace("localhost",Const.BASE_IP),issue.getLocationX(),issue.getLocationY());
         }
 
         //setting resolved icon
-        if ("resolved".equals(issue.state)) {
+        if ("resolved".equals(issue.getStatus())) {
             stateImage.setImageResource(R.drawable.ic_check_circle_black_24dp);
             stateImage.setColorFilter(Color.GREEN);
         } else {
@@ -143,7 +148,7 @@ public class IssueHomeActivity extends AppCompatActivity {
         }
 
         //further decorations
-        switch (issue.severity) {
+        switch (issue.getSeverity()) {
             case "high":
                 severity.setTextColor(Color.RED);
                 break;
@@ -155,7 +160,7 @@ public class IssueHomeActivity extends AppCompatActivity {
 
         }
 
-        adapter.setComments(issue.comments);
+        adapter.setComments(issue.getComments());
         adapter.notifyDataSetChanged();
 
         //set tags
@@ -164,23 +169,6 @@ public class IssueHomeActivity extends AppCompatActivity {
         LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LinearLayoutCompat.LayoutParams.WRAP_CONTENT, LinearLayoutCompat.LayoutParams.MATCH_PARENT);
         llp.setMargins(5, 5, 5, 5); // llp.setMargins(left, top, right, bottom);
 
-
-        for (String s : issue.tags) {
-            TextView tag = new TextView(this);
-            tag.setText(s);
-            tag.setGravity(Gravity.CENTER_VERTICAL);
-            tag.setBackgroundColor(Color.rgb(221, 221, 221));
-            tag.setPadding(10, 10, 10, 10);
-            tag.setLayoutParams(llp);
-            tagsLayout.addView(tag);
-            //set listener for each tag
-            tag.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //TODO : load issues activity filtering particular tag
-                }
-            });
-        }
     }
 
     @Override
@@ -220,28 +208,18 @@ public class IssueHomeActivity extends AppCompatActivity {
                 break;
             case MenuConstants.ISSUE_HOME_MARK_AS_RESOLVED:
                 //TODO : Update database as resolved , reload activity
-                switch (issue.state) {
-                    case "resolved":
-                        issue.state = "unresolved";
-                        stateImage.setImageResource(R.drawable.ic_warning_black_24dp);
-                        stateImage.setColorFilter(Color.RED);
-                        break;
-                    case "unresolved":
-                        issue.state = "unresolved";
-                        stateImage.setImageResource(R.drawable.ic_check_circle_black_24dp);
-                        stateImage.setColorFilter(Color.GREEN);
-                        controller.markAsResolved((issue.issueId));
-                        break;
-                }
-
+                controller.markAsResolved(issue.getIssueId());
                 break;
 
             case MenuConstants.ISSUE_HOME_ASSIGN_PERSON:
                 //TODO : show select user screen
+                Intent i = new Intent(context,SelectUserActivity.class);
+                i.putExtra("type","contractor");
+                startActivityForResult(i,10);
                 break;
             case MenuConstants.ISSUE_HOME_EDIT_LOCATION:
                 Intent selectorIntent = new Intent(context, LocationSelectorActivity.class);
-                selectorIntent.putExtra("imageUrl", issue.planImageUrl);
+                selectorIntent.putExtra("issueId",issue.getIssueId());
                 startActivityForResult(selectorIntent, 1);
                 break;
             case MenuConstants.ISSUE_HOME_ADD_IMAGE:
@@ -249,10 +227,10 @@ public class IssueHomeActivity extends AppCompatActivity {
                 startActivityForResult(intent, 50);
                 break;
             case MenuConstants.ISSUE_HOME_ADD_IMAGE + 100:
-                Intent i = new Intent();
-                i.setType("image/*");
-                i.setAction(Intent.ACTION_GET_CONTENT);//
-                startActivityForResult(Intent.createChooser(i, "Select File"), 51);
+                Intent in = new Intent();
+                in.setType("image/*");
+                in.setAction(Intent.ACTION_GET_CONTENT);//
+                startActivityForResult(Intent.createChooser(in, "Select File"), 51);
 
                 break;
 
@@ -287,7 +265,7 @@ public class IssueHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO : send get request to make a new comment
-
+                controller.makeComment(issue.getIssueId(), commentEditText.getText().toString());
                 System.out.println("load add comment activity");
             }
         });
@@ -296,13 +274,13 @@ public class IssueHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (currentImage + 1 < issue.images.size())
+                if (currentImage + 1 < issue.getImageUrls().size())
                     currentImage++;
-                else if (currentImage + 1 == issue.images.size())
+                else if (currentImage + 1 == issue.getImageUrls().size())
                     currentImage = 0;
 
                 Intent imgViewIntent = new Intent(context, ImageViewerActivity.class);
-                imgViewIntent.putExtra("image_url", issue.images.get(currentImage));
+                imgViewIntent.putExtra("image_url", issue.getImageUrls().get(currentImage));
                 context.startActivity(imgViewIntent);
                 System.out.println("load next image onto view");
             }
@@ -320,9 +298,11 @@ public class IssueHomeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            loadPlan(data.getFloatExtra("xRatio", 0.0f), data.getFloatExtra("yRatio", 0.0f));
+            String url = data.getStringExtra("planUrl");
+            loadPlan(url,data.getFloatExtra("xRatio", 0.0f), data.getFloatExtra("yRatio", 0.0f));
+
         }
-        if (requestCode == 51) {//image from gallery
+        if (requestCode == 51  ) {//image from gallery
             Uri selectedImageUri = data.getData();
             String imagepath = getPath(selectedImageUri);
             File imageFile = new File(imagepath);
@@ -350,7 +330,18 @@ public class IssueHomeActivity extends AppCompatActivity {
 
         }
 
+        if(requestCode == 10 && resultCode == RESULT_OK){
+            String username = data.getStringExtra("username");
+            String url = data.getStringExtra("imageUrl");
+
+            ImageLoader loader = MyVolley.getImageLoader();
+
+            loader.get(url, ImageLoader.getImageListener(assigneeImage,0,0));
+            assignee.setText(username);
+        }
+
     }
+
 
 
     private void markPointOnMap(float x, float y) {
@@ -398,7 +389,7 @@ public class IssueHomeActivity extends AppCompatActivity {
         return uri.getPath();
     }
 
-    private void loadPlan(final float x, final float y){
+    private void loadPlan(final String url,final float x, final float y){
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
@@ -406,9 +397,10 @@ public class IssueHomeActivity extends AppCompatActivity {
                 Looper.prepare();
 
                 try {
+                    if(issue.getPlan()!=null)
                     theBitmap = Glide.
                             with(IssueHomeActivity.this).
-                            load(issue.planImageUrl).
+                            load(url.replace("localhost",Const.BASE_IP)).
                             asBitmap().
                             into(-1,-1).
                             get();
